@@ -24,9 +24,9 @@ public class UnionFind {
 	// Find method
 	
 	/**
-	 * Method that returns the numeric value of the union when it is found
-	 * @param A number with the exact position of the union
-	 * @return A number with the union between that node and its own parent
+	 * Method that returns the numeric value of the union when it is found.
+	 * @param i Number with the exact position of the union
+	 * @return Number with the union between that node and its own parent
 	 */
 
 	public int find(int i) {
@@ -49,8 +49,8 @@ public class UnionFind {
 	
 	/**
 	 * Method that performs the union between one node and another.
-	 * @param Position of node 1
-	 * @param Position of node 2
+	 * @param i Position of node 1
+	 * @param j Position of node 2
 	 */
 
 	public void union(int i, int j) {
@@ -74,7 +74,7 @@ public class UnionFind {
 			
 			parent[root2] = root1;
 			
-			rank[root1]++;
+			rank[root1] ++ ;
 			
 		}
 		
@@ -86,7 +86,7 @@ public class UnionFind {
 	
 	/**
 	 * Constructor method of the UnionFind class that can be called in other classes.
-	 * @param An integer with the maximum value it can take
+	 * @param max Integer with the maximum value it can take
 	 */
 
 	public UnionFind(int max) {
@@ -108,7 +108,7 @@ public class UnionFind {
 	// toString method
 	
 	/**
-	 * Method that allows to join some data so that it can be printed or used in a successful way
+	 * Method that allows to join some data so that it can be printed or used in a successful way.
 	 * @return String with data concatenation
 	 */
 

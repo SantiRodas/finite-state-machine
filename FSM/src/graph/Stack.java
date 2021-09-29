@@ -37,7 +37,7 @@ public class Stack<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method to add an element to the stack structure.
-	 * @param element with all the information
+	 * @param T Element with all the information
 	 */
 
 	@Override
@@ -53,7 +53,7 @@ public class Stack<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows to extract the first element of the stack.
-	 * @return The item to be removed
+	 * @return T Item to be removed
 	 */
 
 	@Override
@@ -69,7 +69,7 @@ public class Stack<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows to obtain the information of the last method of the stack.
-	 * @return The information of the element
+	 * @return Information of the element
 	 */
 
 	@Override
@@ -85,7 +85,7 @@ public class Stack<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows to know if the stack is empty or contains information in it.
-	 * @return A boolean data where true represents empty, and false the opposite
+	 * @return Boolean data where true represents empty, and false the opposite
 	 */
 
 	@Override
@@ -101,7 +101,7 @@ public class Stack<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows to add more than one element at the same time in the stack.
-	 * @param A collection of elements of type generic
+	 * @param c Collection of elements of type generic
 	 */
 
 	@Override

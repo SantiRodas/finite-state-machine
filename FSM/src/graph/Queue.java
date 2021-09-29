@@ -38,7 +38,7 @@ public class Queue<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows adding an element to the queue.
-	 * @param Object of generic type with the information of the element
+	 * @param T Object of generic type with the information of the element
 	 */
 
 	@Override
@@ -86,7 +86,7 @@ public class Queue<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows to know if the queue is empty or contains information in it.
-	 * @return A boolean data where true represents empty, and false the opposite
+	 * @return Boolean data where true represents empty, and false the opposite
 	 */
 
 	@Override
@@ -102,7 +102,7 @@ public class Queue<T> implements InterfaceCollection<T>{
 	
 	/**
 	 * Method that allows to add more than one element at the same time in the queue.
-	 * @param A collection of elements of type generic
+	 * @param c Collection of elements of type generic
 	 */
 
 	@Override
