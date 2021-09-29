@@ -19,7 +19,7 @@ public class Main extends Application {
 		
 		try {
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(""));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Window.fxml"));
 
 			fxmlLoader.setController(controller);
 
