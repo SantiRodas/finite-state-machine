@@ -1,3 +1,10 @@
+/**
+ * Please see the project at GitHub
+ * @author Santiago Rodas Rodriguez
+ * @author Julian Andres Rivera
+ * @date 30/09/2021
+ */
+
 package graph;
 
 import java.util.ArrayList;
@@ -10,229 +17,596 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class AdjacencyMatrix<T> implements InterfaceGraph<T>{
+
+	// --------------------------------------------------------------------------------
 	
-    private static final int DEFAULT_CAPACITY = 21;
+	// Constants of the AdjacencyMatrix class
 
-    private static final double GROWTH_FACTOR = 1.5;
+	private static final int DEFAULT_CAPACITY = 21;
 
-    private int size;
+	private static final double GROWTH_FACTOR = 1.5;
 
-    private boolean isDirected;
+	// --------------------------------------------------------------------------------
+	
+	// Primitive data
 
-    private double[][] adjacencyMatrix;
-    
-    private double[][] adjacencyMatrixWeight;
+	private int size;
 
-    private Map<Integer, T> vertices;
+	private boolean isDirected;
 
-    private Map<T, Integer> verticesIndices;
+	// --------------------------------------------------------------------------------
+	
+	// Array data of the AdjacencyMatrix class
 
-    private NavigableSet<Integer> emptySlots = new TreeSet<>();
+	private double[][] adjacencyMatrix;
 
-    public AdjacencyMatrix() {
-        initialize(DEFAULT_CAPACITY);
-    }
+	private double[][] adjacencyMatrixWeight;
+	
+	// --------------------------------------------------------------------------------
+	
+	// Map and NavigableSet data of the AdjacencyMatrix class
 
-    public AdjacencyMatrix(boolean id) {
-        initialize(DEFAULT_CAPACITY);
-        isDirected = id;
-    }
+	private Map<Integer, T> vertices;
 
-    public AdjacencyMatrix(int capacity) {
-        initialize(capacity);
-    }
+	private Map<T, Integer> verticesIndices;
 
-    public AdjacencyMatrix(boolean id, int capacity) {
-        initialize(capacity);
-        isDirected = id;
-    }
+	private NavigableSet<Integer> emptySlots = new TreeSet<>();
+	
+	// --------------------------------------------------------------------------------
+	
+	// Constructor method number one of the AdjacencyMatrix class
+	
+	/**
+	 * This is the first constructor method of this class.
+	 * The principal idea is to call the initialize method
+	 */
 
-    private void initialize(int capacity) {
-        isDirected = false;
-        size = 0;
-        adjacencyMatrix = new double[capacity][capacity];
-        vertices = new HashMap<>();
-        verticesIndices = new HashMap<>();
-        adjacencyMatrixWeight = new double[capacity][capacity];
-    }
+	public AdjacencyMatrix() {
+		
+		initialize(DEFAULT_CAPACITY);
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// Constructor method number two of the AdjacencyMatrix class
+	
+	/**
+	 * This is the second constructor method of this class.
+	 * @param directed Boolean data with the initial information of the AdjacencyMatrix
+	 */
+
+	public AdjacencyMatrix(boolean directed) {
+		
+		initialize(DEFAULT_CAPACITY);
+		
+		isDirected = directed;
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// Constructor method number three of the AdjacencyMatrix class
+	
+	/**
+	 * This is the third constructor method of this class.
+	 * @param dimension Represent the maximum capacity of the matrix
+	 */
+
+	public AdjacencyMatrix(int dimension) {
+		
+		initialize(dimension);
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// Constructor method number four of the AdjacencyMatrix class
+	
+	/**
+	 * This is the fourth constructor method of this class.
+	 * @param directed Boolean data with the initial information of the AdjacencyMatrix
+	 * @param dimension Represent the maximum capacity of the matrix
+	 */
+
+	public AdjacencyMatrix(boolean directed, int dimension) {
+		
+		initialize(dimension);
+		
+		isDirected = directed;
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	/**
+	 * Method to initialize the AdjacencyMatrix class.
+	 * @param dimension Represent the size of the specify matrix
+	 */
+
+	private void initialize(int dimension) {
+		
+		isDirected = false;
+		
+		size = 0;
+		
+		adjacencyMatrix = new double[dimension][dimension];
+		
+		vertices = new HashMap<>();
+		
+		verticesIndices = new HashMap<>();
+		
+		adjacencyMatrixWeight = new double[dimension][dimension];
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// AddVertex Method
+	
+	/**
+	 * Method to add a vertex in the AdjacencyMatrix.
+	 * @param node Generic object <T> with a original information
+	 * @return Boolean data that represent true if was added, and false if not
+	 */
 
 	@Override
 	public boolean addVertex(T node) {
+		
 		boolean added = false;
-        Integer index;
-        if (verticesIndices.get(node) == null) {
-            if (emptySlots.isEmpty()) {
-                if (size == adjacencyMatrix.length) {
-                    double[][] placeHolder = adjacencyMatrix;
-                    int newLength = (int) (adjacencyMatrix.length * GROWTH_FACTOR);
-                    adjacencyMatrix = new double[newLength][newLength];
-                    for (int i = 0; i < placeHolder.length; i++) {
-                        System.arraycopy(placeHolder[i], 0, adjacencyMatrix[i], 0, placeHolder.length);
-                    }
-                }
-                size++;
-                index = size - 1;
-            } else {
-                index = emptySlots.pollFirst();//TODO: May assign null?
-            }
-            vertices.put(index, node);
-            verticesIndices.put(node, index);
-            added = true;
-        }
-        return added;
-	}
-
-	@Override
-	public void addEdge(T A, T B) {
-		 Integer x = verticesIndices.get(A);
-	        Integer y = verticesIndices.get(B);
-	        if (x != null && y != null) {
-	            if (!isDirected) {
-	                adjacencyMatrix[x][y] = 1;
-	                adjacencyMatrix[y][x] = 1;
-	            } else {
-	                adjacencyMatrix[x][y] = 1;
-	            }
-	        }else{}//TODO: May need to change return type to boolean for when the edge couldn't be added
-	}
-
-	@Override
-	public void addEdge(T A, T B, double l) {
-		int x = verticesIndices.get(A);//TODO: check pre-conditions
-        int y = verticesIndices.get(B);
-        if (!isDirected) {
-            adjacencyMatrix[x][y] = 1;
-            adjacencyMatrix[y][x] = 1;
-            adjacencyMatrixWeight[x][y] = l;
-            adjacencyMatrixWeight[y][x] = l;
-        } else {
-            adjacencyMatrix[x][y] = 1;
-            adjacencyMatrixWeight[x][y] = l;
-        }
-	}
-
-	@Override
-	public boolean removeVertex(T node) {
-		boolean removed = false;
-		Integer position = verticesIndices.get(node);
-		if (position != null) {
-			vertices.remove(position);
-			verticesIndices.remove(node);
-			emptySlots.add(position);
-			for (int i = 0; i < size; i++) {
-				adjacencyMatrix[position][i] = 0;
+		
+		Integer position;
+		
+		if (verticesIndices.get(node) == null) {
+			
+			if (emptySlots.isEmpty()) {
+				
+				if (size == adjacencyMatrix.length) {
+					
+					double[][] holder = adjacencyMatrix;
+					
+					int nl = (int) (adjacencyMatrix.length * GROWTH_FACTOR);
+					
+					adjacencyMatrix = new double[nl][nl];
+					
+					for (int i = 0; i < holder.length; i++) {
+						
+						System.arraycopy(holder[i], 0, adjacencyMatrix[i], 0, holder.length);
+					
+					}
+					
+				}
+				
+				size++;
+				
+				position = size - 1;
+				
+			} else {
+				
+				position = emptySlots.pollFirst();//TODO: May assign null?
+				
 			}
-			for (int i = 0; i < size; i++) {
-				adjacencyMatrix[i][position] = 0;
-			}
-			removed = true;
+			
+			vertices.put(position, node);
+			
+			verticesIndices.put(node, position);
+			
+			added = true;
+			
 		}
+		
+		return added;
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// AddEdge method - 1
+	
+	/**
+	 * Method one to add a specify edge to the matrix.
+	 * @param object1 Generic node <T> with a specify information
+	 * @param object2 Generic node <T> with a specify information
+	 */
+
+	@Override
+	public void addEdge(T object1, T object2) {
+		
+		Integer n1 = verticesIndices.get(object1);
+		
+		Integer n2 = verticesIndices.get(object2);
+		
+		if (n1 != null && n2 != null) {
+			
+			if (!isDirected) {
+				
+				adjacencyMatrix[n1][n2] = 1;
+				
+				adjacencyMatrix[n2][n1] = 1;
+				
+			} else {
+				
+				adjacencyMatrix[n1][n2] = 1;
+				
+			}
+			
+		}else{
+			
+		} // ¿Can be better if this method return a boolean?
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// AddEdge method - 2
+	
+	/**
+	 * Method two to add a specify edge to the matrix.
+	 * @param object1 Generic node <T> with a specify information
+	 * @param object2 Generic node <T> with a specify information
+	 * @param aux Double data (It's better if start in 0 or 1)
+	 */
+
+	@Override
+	public void addEdge(T object1, T object2, double aux) {
+		
+		// Check the conditions
+		
+		int n1 = verticesIndices.get(object1);
+		
+		int n2 = verticesIndices.get(object2);
+		
+		if (!isDirected) {
+			
+			adjacencyMatrix[n1][n2] = 1;
+			
+			adjacencyMatrix[n2][n1] = 1;
+			
+			adjacencyMatrixWeight[n1][n2] = aux;
+			
+			adjacencyMatrixWeight[n2][n1] = aux;
+			
+		} else {
+			
+			adjacencyMatrix[n1][n2] = 1;
+			
+			adjacencyMatrixWeight[n1][n2] = aux;
+			
+		}
+		
+	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// RemoveVertex method - 1
+	
+	/**
+	 * Method one to remove a specify vertex of the system.
+	 * @param object Generic node <T> with a original information
+	 * @return Boolean data that represent true if was removed, and false if not
+	 */
+
+	@Override
+	public boolean removeVertex(T object) {
+		
+		boolean removed = false;
+		
+		Integer point = verticesIndices.get(object);
+		
+		if (point != null) {
+			
+			vertices.remove(point);
+			
+			verticesIndices.remove(object);
+			
+			emptySlots.add(point);
+			
+			for (int i = 0; i < size; i++) {
+				
+				adjacencyMatrix[point][i] = 0;
+				
+			}
+			
+			for (int i = 0; i < size; i++) {
+				
+				adjacencyMatrix[i][point] = 0;
+				
+			}
+			
+			removed = true;
+			
+		}
+		
 		return removed;
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// RemoveVertex method - 2
+	
+	/**
+	 * Method two to remove a specify vertex of the system.
+	 * @param object1 Generic node <T> with a original information
+	 * @param object2 Generic node <T> with a original information
+	 */
 
 	@Override
-	public void removeEdge(T A, T B) {
-		 if (!isDirected) {
-	            adjacencyMatrix[(int) A][(int) B] = 0;//TODO: check pre-conditions
-	            adjacencyMatrix[(int) B][(int) A] = 0;
-	        } else {
-	            adjacencyMatrix[(int) A][(int) B] = 0;
-	        }
+	public void removeEdge(T object1, T object2) {
+		
+		if (!isDirected) {
+			
+			// Check the conditions
+			
+			adjacencyMatrix[(int) object1][(int) object2] = 0;
+			
+			adjacencyMatrix[(int) object2][(int) object1] = 0;
+		
+		} else {
+			
+			adjacencyMatrix[(int) object1][(int) object2] = 0;
+			
+		}
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// VertexAdjacent method
+	
+	/**
+	 * Method to change and take the adjacency object of a vertex.
+	 * @param object Generic node <T> with a original information
+	 * @return Generic list with all the adjacency objects
+	 */
 
 	@Override
-	public List<T> vertexAdjacent(T node) {
-		Integer position = verticesIndices.get(node);
-        List<T> adjacentVertices = null;
-        if (position != null) {
-            Set<Integer> adjacentVerticesPositions = new HashSet<>();
-            for (int i = 0; i < size; i++) {
-                if (adjacencyMatrix[position][i] != 0) {
-                    adjacentVerticesPositions.add(i);
-                }
-            }
-            if (isDirected) {
-                for (int i = 0; i < size; i++) {
-                    if (adjacencyMatrix[i][position] != 0) {
-                        adjacentVerticesPositions.add(i);
-                    }
-                }
-            }
-            adjacentVertices = new ArrayList<>();
-            for (Integer key : adjacentVerticesPositions
-            ) {
-                adjacentVertices.add(vertices.get(key));
-            }
-        }
-        return adjacentVertices;
+	public List<T> vertexAdjacent(T object) {
+		
+		Integer point = verticesIndices.get(object);
+		
+		List<T> adjacent = null;
+		
+		if (point != null) {
+			
+			Set<Integer> avp = new HashSet<>();
+			
+			for (int i = 0; i < size; i++) {
+				
+				if (adjacencyMatrix[point][i] != 0) {
+					
+					avp.add(i);
+					
+				}
+				
+			}
+			
+			if (isDirected) {
+				
+				for (int i = 0; i < size; i++) {
+					
+					if (adjacencyMatrix[i][point] != 0) {
+						
+						avp.add(i);
+						
+					}
+					
+				}
+				
+			}
+			
+			adjacent = new ArrayList<>();
+			
+			for (Integer key : avp) {
+				
+				adjacent.add(vertices.get(key));
+				
+			}
+			
+		}
+		
+		return adjacent;
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// AreConnected method
+	
+	/**
+	 * Method to know if one object and another one are connected inside the matrix.
+	 * @param object1 Generic node <T> with a original information
+	 * @param object2 Generic node <T> with a original information
+	 * @return Boolean data that represent true if was connected, and false if not
+	 */
 
 	@Override
-	public boolean areConnected(T A, T B) {
-		 int uValor = verticesIndices.get(A);//TODO: check if 'u' and 'v' exist in the graph
-	        int vValor = verticesIndices.get(B);
-	        if (isDirected) {
-	            return adjacencyMatrix[uValor][vValor] == 1;
-	        } else {
-	            return adjacencyMatrix[uValor][vValor] == 1 && adjacencyMatrix[vValor][uValor] == 1;
-	        }
+	public boolean areConnected(T object1, T object2) {
+		
+		// Check if the information exists in the graph
+		
+		int u = verticesIndices.get(object1);
+		
+		int v = verticesIndices.get(object2);
+		
+		if (isDirected) {
+			
+			return adjacencyMatrix[u][v] == 1;
+			
+		} else {
+			
+			return adjacencyMatrix[u][v] == 1 && adjacencyMatrix[v][u] == 1;
+		
+		}
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// WeightMatrix method
+	
+	/**
+	 * Method to have the weight matrix of the system.
+	 * @return Array type double with all the information that we needed
+	 */
 
 	@Override
 	public double[][] weightMatrix() {
-		for (int i = 0; i < adjacencyMatrix.length; i++) {
-			for (int j = 0; j < adjacencyMatrix[i].length; j++) {
-				if (i != j) {
-					if (adjacencyMatrixWeight[i][j] == 0) {
-						adjacencyMatrixWeight[i][j] = Double.MAX_VALUE;
+		
+		for (int a = 0; a < adjacencyMatrix.length; a ++) {
+			
+			for (int b = 0; b < adjacencyMatrix[a].length; b ++) {
+				
+				if (a != b) {
+					
+					if (adjacencyMatrixWeight[a][b] == 0) {
+						
+						adjacencyMatrixWeight[a][b] = Double.MAX_VALUE;
+						
 					}
+					
 				}
+				
 			}
+			
 		}
+		
 		return adjacencyMatrixWeight;
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// IsDirected method
+	
+	/**
+	 * Method to know if a Matrix is directed.
+	 * @return Boolean data that represent true if was directed, and false if not
+	 */
 
 	@Override
 	public boolean isDirected() {
+		
 		return isDirected;
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// GetVertexSize method
+	
+	/**
+	 * Method to have the size of the vertex.
+	 * @return Integer data that represent the dimension of the system
+	 */
 
 	@Override
 	public int getVertexSize() {
+		
 		return vertices.size();
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// IsWeighted method
+	
+	/**
+	 * Method to know if a Matrix is weighted.
+	 * @return Boolean data that represent true if was weighted, and false if not
+	 */
 
 	@Override
 	public boolean isWeighted() {
-		// TODO Auto-generated method stub
+		
 		return false;
+		
+		// TODO Auto-generated method stub
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// GetIndex method
+	
+	/**
+	 * Method to have the index of the vertex.
+	 * @param object Generic node <T> with a original information
+	 * @return Integer data that represent the index of the system
+	 */
 
-	public int getIndex(T vertex) {
-		return verticesIndices.get(vertex);
+	public int getIndex(T object) {
+		
+		return verticesIndices.get(object);
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// Search method - 1
+	
+	/**
+	 * Method one to know if a element exists in the matrix.
+	 * @param object Generic node <T> with a original information
+	 * @return Boolean data that represent true if exists, and false if not
+	 */
 
 	@Override
-	public boolean search(T A) {
-		return vertices.containsValue(A);
+	public boolean search(T object) {
+		
+		return vertices.containsValue(object);
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// Search method - 2
+	
+	/**
+	 * Method two to know if a element exists in the matrix.
+	 * @param position Specify index of the element inside the system
+	 * @return Generic node <T> with a original information
+	 */
 
 	@Override
-	public T search(int index) {
-		return vertices.get(index);
+	public T search(int position) {
+		
+		return vertices.get(position);
+		
 	}
+	
+	// --------------------------------------------------------------------------------
+	
+	// GetEdges method
+	
+	/**
+	 * Method to have all the edges of the system.
+	 * @return Generic list with the edges that meet certain conditions
+	 */
 
 	@Override
 	public List<Edge<T>> getEdges() {
-		List<Edge<T>> edges = new ArrayList<Edge<T>>();
+		
+		List<Edge<T>> e = new ArrayList<Edge<T>>();
+		
 		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			
 			for (int j = 0; j < adjacencyMatrix[i].length; j++) {
+				
 				if(adjacencyMatrix[i][j] == 1) {
-					edges.add(new Edge<T>(vertices.get(i), vertices.get(j), weightMatrix()[i][j]));
+					
+					e.add(new Edge<T>(vertices.get(i), vertices.get(j), weightMatrix()[i][j]));
+				
 				}
+				
 			}
+			
 		}
-		return edges;	
+		
+		return e;	
+		
 	}
+	
+	// --------------------------------------------------------------------------------
 
 }

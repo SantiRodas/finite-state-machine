@@ -408,12 +408,12 @@ public class GraphAlgorithms<T> {
 	
 	// --------------------------------------------------------------------------------
 	
+	// GetCost
+	
 	/**
 	 * Method that returns the cost of the operation in the network).
 	 * @return Array (double) with all the information that represent the cost of the operation
 	 */
-	
-	// GetCost
 
 	public static double[] getCost() {
 		
@@ -423,12 +423,12 @@ public class GraphAlgorithms<T> {
 	
 	// --------------------------------------------------------------------------------
 	
+	// GetPath method
+	
 	/**
 	 * Method that returns the path of the operation in the network).
 	 * @return Array (Integer) with all the information that represent the path of the operation
 	 */
-	
-	// GetPath method
 	
 	public static int[] getPath() {
 		
@@ -438,12 +438,12 @@ public class GraphAlgorithms<T> {
 	
 	// --------------------------------------------------------------------------------
 	
+	// GetChoise method
+	
 	/**
 	 * Method that returns the choice of the operation in the network).
 	 * @return List (Integer) with all the information that represent the choice of the operation
 	 */
-	
-	// GetChoise method
 
 	public static List<Integer> getChoice() {
 		
