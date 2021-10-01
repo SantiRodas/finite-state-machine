@@ -50,6 +50,9 @@ In the event that you have not been able to complete steps 3, 4 and 5, [please o
 - [Santiago Rodas Rodriguez](https://github.com/SantiRodas)
 - [Julian Andres Rivera](https://github.com/JulianAndresRiveraCarrillo)
 
+## License
+* [MIT License](https://github.com/SantiRodas/finite-state-machine/blob/main/LICENSE)
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ###### [Behaviour:](https://github.com/SantiRodas/finite-state-machine/blob/main/CODE_OF_CONDUCT.md) All contributors commit to a code of conduct.
